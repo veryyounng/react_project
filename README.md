@@ -1,6 +1,6 @@
 # ✍️simple diary✍️
 리액트를 이용하여 간단한 일기장을 만들었습니다. 
-데이터베이스를 사용하지 않았지만 sessionStorage를 이용하여 생성, 수정, 삭제가 가능합니다.
+sessionStorage를 이용하여 생성, 수정, 삭제가 가능합니다.
 
 
 ### Tech Stack 📚
