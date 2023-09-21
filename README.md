@@ -3,18 +3,18 @@
 sessionStorage를 이용하여 생성, 수정, 삭제가 가능합니다.
 
 
-### 주제 선정 이유 ❓
+## 주제 선정 이유 ❓
 기록하는 습관을 기르고자 간단한 일기장을 활용하면 좋을 것 같아서 
 
-### Tech Stack 📚
+## Tech Stack 📚
 <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/Css-1572B6?style=flat&logo=Css3&logoColor=white"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/> <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat&logo=Visual Studio Code&logoColor=white"/>
 
-### 주요 기능✨
+## 주요 기능✨
 - 일기 제목과 본문, 감정을 작성
 - 일기 수정
 - 일기 삭제
 
-### 사용 설명 💻
+## 사용 설명 💻
 1. 일기의 제목과 본문을 작성하고 감정의 수치를 선택한다.
 <br><img width="100%" src="https://github.com/veryyounng/react_project/assets/121228672/a826219f-3523-4bb6-952b-b7cf4fd60a4c.gif"/>
 <br><br>
