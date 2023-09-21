@@ -27,6 +27,7 @@ sessionStorage를 이용하여 생성, 조회, 수정, 삭제가 가능합니다
 <img src = "https://github.com/veryyounng/react_project/assets/121228672/8cb41063-1042-4157-8004-55a49d5351fe"/><br><br>
 
 ## ✔️DOM 조작하기- useRef 
+
 ```javascript
 const authorInput = useRef();
 const contentInput = useRef();
@@ -54,6 +55,7 @@ const handleSubmit =()=>{
 ```
 
 ## ✔️리스트 렌더링 (조회하기) 
+
 ```javascript
 const DiaryList = ()=>{
    const diaryList = useContext(DiaryStateContext);
@@ -73,6 +75,7 @@ const DiaryList = ()=>{
 ```
 
 ## ✔️데이터 추가하기 
+
 <img src="https://github.com/veryyounng/react_project/assets/121228672/6a460425-5fe8-4eb7-afdf-fa81d4ed7c56"/>
 DiaryEditor에서 create 이벤트가 발생하여 위로 올라간다.<br>
 부모 컴포넌트에서 상태변화 함수를 호출해서 데이터가 변화하면 다시 아래로 흐른다.
@@ -116,8 +119,97 @@ case 'REMOVE':{
 targetId가 포함하지 않은 id를 바꾼다-> 새로운 배열로 상태가 변환되고 가장 위에 있던 요소가 삭제된다.
 
 ## ✔️데이터 수정하기
+
 ```javascript
 case 'EDIT': {
       return state.map((it)=> it.id === action.targetId? {...it, content: action.newContent}: it);
     }
 ```
+## ✔️React Lifecycle 제어하기 - useEffect
+
+lifecycle란?
+- 탄생 mount 초기화 작업
+- 변화 update 예외처리 작업
+- 죽음 unmount 메모리 정리 작업 <br>
+
+▪️ useEffect는 callback함수와 의존성 배열을 전달한다.
+
+```javascript
+const App=()=> {
+  const [data, dispatch] = useReducer(reducer, []);
+
+  const dataId = useRef(0)
+
+  const getData = async()=>{
+    const res = await fetch('https://jsonplaceholder.typicode.com/comments').then((res)=>res.json());
+
+    const initData = res.slice(0,20).map((it)=>{
+      return {
+              author: it.email,
+              content: it.body,
+              emotion: Math.floor(Math.random()*5)+1,
+              created_date: new Date().getTime(),
+              id: dataId.current++,
+      };
+    });
+
+    dispatch({type:"INIT", data:initData})
+  };
+
+  useEffect(()=>{
+    getData();
+  },[])
+```
+
+## 최적화 ✔️
+
+#### 1. useMemo
+
+문제를 풀때 문제의 답을 이전에 기억해두었다가 똑같은 문제를 보면 기억함 것을 적음
+- app 컴포넌트가 리렌더링 되고 있고 getDiaryAnalysis도 두번 동작되고 있음
+- return을 가진 함수를 최적화하기 위해서 useMemo를 사용한다.
+- 최적화 하고싶은 함수를 감싸서 그 콜백함수가 return하는 값을 return한다.
+- 연산을 최적화하는 것이므로 값으로 사용한다.
+
+
+  ```javascript
+  const getDiaryAnalysis = useMemo(()=>{
+    const goodCount = data.filter((it)=>it.emotion >= 3).length;
+    const badCount = data.length - goodCount;
+    const goodRatio = (goodCount/data.length) * 100;
+    return {goodCount, badCount, goodRatio};
+  }, [data.length]
+  );
+
+  const {goodCount, badCount, goodRatio}= getDiaryAnalysis;
+  ```
+
+#### 2. React.memo
+
+고차 컴포넌트 : 컴포넌트를 가져와 새로운 컴포넌트를 반환하는 함수이다.
+똑같은 props를 받으면 리렌더링을 하지 않고 강화된 컴포넌트로 반환한다
+
+  ```javascript
+  export default React.memo(DiaryEditor);
+  ```
+
+#### 3. useCallback
+
+```javascript
+const onCreate = useCallback((author, content, emotion)=> {
+    dispatch({
+      type:'CREATE', 
+      data:{author, content, emotion, id:dataId.current}, });
+    dataId.current += 1;//0번 id는 1번으로 증가해야함
+  },[]);
+
+  const onRemove = useCallback((targetId) => {
+    dispatch({type: "REMOVE", targetId})
+  },[]);
+
+  const onEdit = useCallback((targetId, newContent)=>{
+
+    dispatch({type : "EDIT", targetId, newContent})
+  },[]);
+```
+  
