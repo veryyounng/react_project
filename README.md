@@ -74,7 +74,7 @@ const DiaryList = ()=>{
 
 ## ✔️데이터 추가하기 
 <img src="https://github.com/veryyounng/react_project/assets/121228672/6a460425-5fe8-4eb7-afdf-fa81d4ed7c56"/>
-DiaryEditor에서 create 이벤트가 발생하여 위로 올라간다.
+DiaryEditor에서 create 이벤트가 발생하여 위로 올라간다.<br>
 부모 컴포넌트에서 상태변화 함수를 호출해서 데이터가 변화하면 다시 아래로 흐른다.
 
 ```javascript
@@ -103,7 +103,7 @@ const onCreate = useCallback((author, content, emotion)=> {
   },[]);
 
 ```
-diaryEditor에서 작성한 author, contentm emotion 파라미터를 받는다. 
+diaryEditor에서 작성한 author, contentm emotion 파라미터를 받는다. <br>
 현재 일기가 추가되는 시간객체를 만들어서 가져오고 데이터 아이디에 1이 증가하여 업데이트된다.
 
 ## ✔️데이터 삭제하기 
